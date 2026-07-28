@@ -1,0 +1,6 @@
+venv/
+.env
+.env.save
+_pycache_/
+*.pyc
+generated/
