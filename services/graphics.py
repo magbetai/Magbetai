@@ -59,12 +59,7 @@ def create_tips_image(tips):
         fill=dark_green,
     )
 
-    draw.text(
-        (75, 65),
-        "MAGBETS",
-        font=get_font(62, True),
-        fill=green,
-    )
+
 
     draw.text(
         (75, 138),
@@ -169,6 +164,29 @@ def create_tips_image(tips):
         fill=grey,
         anchor="ra",
     )
+    logo_path = Path("assets/magbets_logo.png")
+
+    if logo_path.exists():
+        logo = Image.open(logo_path).convert("RGBA")
+        logo = logo.crop(logo.getbbox())
+
+        max_logo_width = 350
+        logo_ratio = max_logo_width / logo.width
+        logo_height = int(logo.height * logo_ratio)
+
+        logo = logo.resize(
+            (max_logo_width, logo_height),
+            Image.Resampling.LANCZOS,
+        )
+
+        logo_x = (WIDTH - logo.width) // 2
+        logo_y = 82
+
+        image.paste(
+            logo,
+            (logo_x, logo_y),
+            logo,
+        )
 
     filename = datetime.now().strftime("magbet_tips_%Y%m%d_%H%M%S.jpg")
     output_path = OUTPUT_DIR / filename
